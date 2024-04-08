@@ -1,6 +1,8 @@
 package com.goodee.library.member.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -61,6 +63,28 @@ public class MemberService {
 				map.put("res_code", "200");
 				map.put("res_msg", loginedMember.getM_name()+"님, 환영합니다.");
 			}
+		return map;
+	}
+
+	public List<MemberDto> selectMemberAll(){
+		LOGGER.info("회원 목록 조회");
+		List<MemberDto> resultList = new ArrayList<MemberDto>();
+		resultList = dao.selectMemberAll();
+		return resultList;
+	}
+
+	public Map<String,String> updateMember(MemberDto dto, HttpSession session){
+		LOGGER.info("회원 정보 수정 요청");
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("res_code", "404");
+		map.put("res_msg", "회원 정보 수정중 오류가 발생했습니다.");
+		if(dao.updateMember(dto) > 0) {
+			map.put("res_code", "200");
+			map.put("res_msg", "회원 정보가 수정되었습니다.");
+			MemberDto loginedMemberDto = dao.selectMemberByNo(dto.getM_no());
+			session.setAttribute("loginedMember", loginedMemberDto);
+			session.setMaxInactiveInterval(60*30);
+		}
 		return map;
 	}
 	

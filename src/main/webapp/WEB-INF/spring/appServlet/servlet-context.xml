@@ -26,4 +26,14 @@
 	
 	<context:component-scan base-package="com.goodee.library" />
 	
+	<resources mapping="/libraryUploadImg/**" location="file:///C:/library/upload/"/>
+	
+	<interceptors>
+	<interceptor>
+		<mapping path="/member/**"/>
+		<mapping path="/book/**"/>
+		<beans:bean class="com.goodee.library.member.util.MemberLoginInterceptor" />
+	</interceptor>
+</interceptors>
+	
 </beans:beans>

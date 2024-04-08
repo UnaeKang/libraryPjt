@@ -39,4 +39,11 @@ public class MemberApiController {
 		LOGGER.info("로그인 기능");
 		return service.loginMember(dto, session);
 	}
+	
+	@ResponseBody
+	@PostMapping("/member/{m_no}")
+	public Map<String,String> memberEdit(@RequestBody MemberDto dto, HttpSession session){
+		LOGGER.info("회원 정보 수정 기능");
+		return service.updateMember(dto,session);
+	}
 }
