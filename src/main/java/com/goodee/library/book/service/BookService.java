@@ -1,6 +1,8 @@
 package com.goodee.library.book.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +38,20 @@ public class BookService {
 
 public List<BookDto> selectBookListToday() {
 	return bookDao.selectBookListToday();
+}
+
+public BookDto selectBookDetail(long b_no) {
+	return bookDao.selectBookDetail(b_no);
+}
+
+public Map<String, String> editBookDetail(BookDto dto) {
+		int result = bookDao.editBookDetail(dto);
+		Map<String, String> map = new HashMap<String, String>();
+		if(result > 0) {
+			map.put("res_code", "200");
+			 map.put("res_msg","도서 수정이 완료되었습니다.");
+		}
+	return map;
 }
    
    

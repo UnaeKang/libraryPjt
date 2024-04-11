@@ -4,7 +4,9 @@ import java.awt.print.Book;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
@@ -68,6 +70,27 @@ public List<BookDto> selectBookListToday() {
 		e.printStackTrace();
 	}
 	return resultList;
+}
+
+public BookDto selectBookDetail(long b_no) {
+	BookDto dto = new BookDto();
+	try {
+		dto = sqlSession.selectOne(namespace+"selectBookDetail",b_no);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return dto;
+}
+
+public int editBookDetail(BookDto dto) {
+	int result = 0;
+	try {
+			result = sqlSession.update(namespace+"editBookDetail",dto);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
+	return result;
 }
 
 }

@@ -1,6 +1,7 @@
 package com.goodee.library.book.utill;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadFileService {
 	private static final Logger LOGGER = LogManager.getLogger(UploadFileService.class);
+	
+	private String uploadDir = "C:\\library\\upload\\";
 
 	public String upload(MultipartFile file) {
 		LOGGER.info("파일 서버에 등록");
@@ -43,4 +46,18 @@ public class UploadFileService {
 		}
 		return null;
 	}
+	
+	   public boolean delete(String b_thumbnail) {
+		      boolean result = false;
+		      try {
+		         String srcFileName = URLDecoder.decode(b_thumbnail,"UTF-8");
+		         File file = new File(uploadDir+srcFileName);
+		         if(file.exists()) {
+		            result = file.delete();
+		         }   
+		      }catch(Exception e) {
+		         e.printStackTrace();
+		      }
+		      return result;
+		   }
 }

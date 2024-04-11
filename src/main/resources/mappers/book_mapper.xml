@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.goodee.library.bookMapper">
+
+
    <insert id="createBook" parameterType="com.goodee.library.book.dto.BookDto">
       INSERT INTO tbl_book (b_thumbnail, b_name, b_writer, b_reg_date)
          VALUES(#{b_thumbnail}, #{b_name}, #{b_writer}, NOW())
@@ -34,4 +36,26 @@
    				DATE_FORMAT(b_reg_date, '%Y-%m-%d') = CURDATE()
    			</where>
    </select>
+   
+   <select id="selectBookDetail" parameterType="Long" resultType="com.goodee.library.book.dto.BookDto">
+   	SELECT * FROM tbl_book
+   		<where>
+   			b_no = #{b_no}
+   		</where>
+   </select>
+   
+   <update id="editBookDetail" parameterType="com.goodee.library.book.dto.BookDto">
+   		UPDATE tbl_book  SET 
+   		b_name = #{b_name}
+   		, b_writer = #{ b_writer}
+   		,b_reg_date = NOW()
+   		<if test="b_thumbnail != null and b_thumbnail.equals('') == false">
+   			,b_thumbnail = #{b_thumbnail}
+   		</if>
+   		<where>
+   			b_no = #{b_no} 
+   		</where>
+   </update>
+
+   
 </mapper>
